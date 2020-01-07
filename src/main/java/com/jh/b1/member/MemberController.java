@@ -1,5 +1,7 @@
 package com.jh.b1.member;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -78,8 +80,7 @@ public class MemberController {
 		
 //	}
 	
-	
-	
+		
 	@GetMapping("memberLogin")
 	public void memberLogin()throws Exception{
 		
@@ -96,8 +97,10 @@ public class MemberController {
 	
 	
 	@PostMapping("memberLogin")
-	public ModelAndView memberLogin(MemberVO memberVO, HttpSession session)throws Exception{
+	public ModelAndView memberLogin(MemberVO memberVO, HttpSession session, MemberFilesVO memberFilesVO)throws Exception{
 		ModelAndView mv = new ModelAndView();
+		List<MemberFilesVO> ar = memberService.memberfilesSelect(memberVO, memberFilesVO);
+		
 		memberVO = memberService.memberLogin(memberVO);
 		
 		
@@ -106,6 +109,7 @@ public class MemberController {
 		if(memberVO !=null) {
 			message = "Login Success";
 			session.setAttribute("member", memberVO);
+			session.setAttribute("file", ar);
 		}
 		mv.setViewName("common/result");
 		mv.addObject("message", message);
