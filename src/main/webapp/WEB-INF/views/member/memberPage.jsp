@@ -15,7 +15,7 @@
 	<h1>Email : ${member.email}</h1>
 	<h1>Photo</h1>
 	
-	<c:forEach items="${file}" var="vo" >
+	<c:forEach items="${file}" var="vo" end = 0>
 		<img alt="" src="../upload/${vo.memberFilesVO.fname}">
 	</c:forEach>
 	<a class="btn btn-primary" href="./memberFileDown?fnum=${member.memberFilesVO.fnum}">FileDown</a>

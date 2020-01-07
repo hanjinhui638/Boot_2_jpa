@@ -99,10 +99,11 @@ public class MemberController {
 	@PostMapping("memberLogin")
 	public ModelAndView memberLogin(MemberVO memberVO, HttpSession session, MemberFilesVO memberFilesVO)throws Exception{
 		ModelAndView mv = new ModelAndView();
-		List<MemberFilesVO> ar = memberService.memberfilesSelect(memberVO, memberFilesVO);
+		
 		
 		memberVO = memberService.memberLogin(memberVO);
 		
+		List<MemberFilesVO> ar = memberService.memberfilesSelect(memberVO, memberFilesVO);
 		
 		String message ="Login Fail";
 		
