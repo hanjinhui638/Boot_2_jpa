@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,11 +25,24 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	
+	//@ResponseBody view를 찾지 않고 바로 가는 것 
+	@PostMapping("memberIdCheck")
+	@ResponseBody
+	public boolean memberIdCheck(String id)throws Exception{
+		return memberService.memberIdCheck(id);
+	}
+	
+	
+	
 	@GetMapping("memberUpdate")
 	public void memberUpdate(HttpSession session, Model model) {
 		MemberVO memberVO = (MemberVO)session.getAttribute("member");
 		model.addAttribute("memberVO", memberVO);
 	}
+	
+	
+	
 	
 	/*@GetMapping("memberFileDown")
 	public ModelAndView memberfileDown(MemberFilesVO memberFilesVO)throws Exception{
@@ -110,7 +124,7 @@ public class MemberController {
 	
 		
 	@GetMapping("memberLogin")
-	public void memberLogin()throws Exception{
+	public void memberLogin(String id)throws Exception{
 		
 	}
 	

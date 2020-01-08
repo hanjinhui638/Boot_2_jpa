@@ -58,5 +58,38 @@
   
 </div>
 
+<script type="text/javascript">
+
+	$("#id").blur(function(){
+		
+		var id= $("#id").val();
+
+		$.ajax({
+			type:"POST",
+			url: "./memberIdCheck",
+			data: {
+				id:id
+				},
+				success:function(data){
+					if(data){
+						alert("중복 ID");
+						$("#id").val("");
+						//$("#id").focus();
+						}else{
+							alert("사용 가능 ID");
+							}
+				
+					}
+				
+			});
+
+
+		});
+
+
+
+	
+</script>
+
 </body>
 </html>

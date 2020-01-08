@@ -27,6 +27,12 @@ public class MemberService {
 	@Autowired
 	private FileSaver fileSaver;
 	
+	public boolean memberIdCheck(String id)throws Exception{
+		return memberRepository.existsById(id);
+		
+	}
+	
+
 	public MemberVO memberJoin(MemberVO memberVO, MultipartFile files)throws Exception{
 	
 		File file = filePathGenerator.getUseClassPathResource("upload");
