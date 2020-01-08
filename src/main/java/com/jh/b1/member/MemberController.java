@@ -24,7 +24,13 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
-/*	@GetMapping("memberFileDown")
+	@GetMapping("memberUpdate")
+	public void memberUpdate(HttpSession session, Model model) {
+		MemberVO memberVO = (MemberVO)session.getAttribute("member");
+		model.addAttribute("memberVO", memberVO);
+	}
+	
+	/*@GetMapping("memberFileDown")
 	public ModelAndView memberfileDown(MemberFilesVO memberFilesVO)throws Exception{
 		ModelAndView mv = new ModelAndView();
 		memberFilesVO = memberService.memberfilesSelect(memberFilesVO);
@@ -32,9 +38,9 @@ public class MemberController {
 			mv.addObject("memberfiles", memberFilesVO);
 			mv.addObject("path", "upload");
 			mv.setViewName("fileDown");
-			/* 클래스 이름의 첫글자를 소문자로 바꾼 이름 */
+		
 			
-		/*}else {
+		}else {
 			mv.addObject("message", "No Image File");
 			mv.addObject("path", "./memberPage");
 			mv.setViewName("common/result");
@@ -44,41 +50,63 @@ public class MemberController {
 		return mv;
 	}*/
 	
-	/*@GetMapping("memberJoin")
-	public String memberJoin()throws Exception{
-		//MemberVO memberVO new MemberVO();
-		//model.addAttribute("memberVO", memberVO);
-		//model.addAttribute("memberVO", new MemberVO());
+	
+	@GetMapping("memberJoin")
+	public String memberJoin(Model model)throws Exception{
+		MemberVO memberVO  = new MemberVO();
+		model.addAttribute("memberVO", memberVO);
+		model.addAttribute("memberVO", new MemberVO());
 		return "member/memberJoin";
+	}
+	
+	
+	@PostMapping("memberJoin")
+	public ModelAndView memberJoin(MemberVO memberVO, MultipartFile files)throws Exception{
+		ModelAndView mv = new ModelAndView();
+		
+		MemberVO memberVO2 = memberService.memberJoin(memberVO, files);
+		
+		String message = "Join Fail";
+		String path = "../";
+		
+		if(memberVO2 !=null) {
+			message = "Join Success";
+		}
+		mv.setViewName("common/result");
+		mv.addObject("message", message);
+		mv.addObject("path", path);
+		
+		return mv;
+	}
+	
+	
+	
+/*	@PostMapping("memberJoin")
+	public ModelAndView memberJoin(@Valid MemberVO memberVO, BindingResult bindingResult, MultipartFile files)throws Exception{
+								
+		ModelAndView mv = new ModelAndView();
+		
+	if(memberService.memberJoinValidate(memberVO, bindingResult)){
+		
+		mv.setViewName("member/memberJoin");
+		}else {		
+			
+			
+		int result = memberService.memberJoin(memberVO, files);
+		
+		String message = "Join Fail";
+		String path = "../";
+		
+		if(result>0) {
+			message="Join Success";
+		}
+		mv.setViewName("common/result");
+		mv.addObject("message",message);
+		mv.addObject("path", path);
+		}
+		return mv;
+		
 	}*/
-	
-	
-	//@PostMapping("memberJoin")
-	//public ModelAndView memberJoin(@Valid MemberVO memberVO, BindingResult bindingResult, MultipartFile files)throws Exception{
-								/* bindingResult의 위치는 @Valid 바로 뒤  검증하고 옴*/							/* 파라미터와 동일하게 */
-		//ModelAndView mv = new ModelAndView();
-		
-//		if(memberService.memberJoinValidate(memberVO, bindingResult)){
-		
-//		mv.setViewName("member/memberJoin");
-//		}else {		
-			
-			
-//		int result = memberService.memberJoin(memberVO, files);
-		
-//		String message = "Join Fail";
-//		String path = "../";
-		
-//		if(result>0) {
-//			message="Join Success";
-//		}
-//		mv.setViewName("common/result");
-//		mv.addObject("message",message);
-//		mv.addObject("path", path);
-//		}
-//		return mv;
-		
-//	}
 	
 		
 	@GetMapping("memberLogin")
@@ -97,20 +125,20 @@ public class MemberController {
 	
 	
 	@PostMapping("memberLogin")
-	public ModelAndView memberLogin(MemberVO memberVO, HttpSession session, MemberFilesVO memberFilesVO)throws Exception{
+	public ModelAndView memberLogin(MemberVO memberVO, HttpSession session)throws Exception{
 		ModelAndView mv = new ModelAndView();
 		
 		
 		memberVO = memberService.memberLogin(memberVO);
 		
-		List<MemberFilesVO> ar = memberService.memberfilesSelect(memberVO, memberFilesVO);
+		//List<MemberFilesVO> ar = memberService.memberfilesSelect(memberVO, memberFilesVO);
 		
 		String message ="Login Fail";
 		
 		if(memberVO !=null) {
 			message = "Login Success";
 			session.setAttribute("member", memberVO);
-			session.setAttribute("file", ar);
+			//session.setAttribute("file", ar);
 		}
 		mv.setViewName("common/result");
 		mv.addObject("message", message);

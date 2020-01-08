@@ -9,7 +9,6 @@
 <c:import url="../template/boot.jsp"/>
 </head>
 <body>
-
 <c:import url="../template/nav.jsp"/>
 <div class="container">
   <h2>Member Login</h2>
