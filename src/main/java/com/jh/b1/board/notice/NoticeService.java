@@ -1,4 +1,4 @@
-package com.jh.b1.notice;
+package com.jh.b1.board.notice;
 
 
 import java.util.Optional;
@@ -12,8 +12,10 @@ public class NoticeService {
 	@Autowired
 	private NoticeRepository noticeRepository;
 	
-	public Optional<NoticeVO> noticeSelect(NoticeVO noticeVO)throws Exception{
-		 return noticeRepository.findById(noticeVO.getNum());
+	public void noticeList() throws Exception{
+		noticeRepository.findAllByNumDesc();
+			
 	}
+	
 
 }
