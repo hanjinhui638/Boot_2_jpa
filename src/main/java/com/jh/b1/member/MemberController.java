@@ -26,6 +26,16 @@ public class MemberController {
 	private MemberService memberService;
 	
 	
+	public String memberDelete(String id, HttpSession session)throws Exception{
+		
+		memberService.memberDelete(id);
+		session.invalidate();
+		
+		return "redirect:../";
+	}
+	
+	
+	
 	//@ResponseBody view를 찾지 않고 바로 가는 것 
 	@PostMapping("memberIdCheck")
 	@ResponseBody
@@ -39,6 +49,33 @@ public class MemberController {
 	public void memberUpdate(HttpSession session, Model model) {
 		MemberVO memberVO = (MemberVO)session.getAttribute("member");
 		model.addAttribute("memberVO", memberVO);
+	}
+	
+	@PostMapping("memberUpdate")
+	public ModelAndView memberUpdate(MemberVO memberVO, MultipartFile files, HttpSession session) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		
+		MemberVO loginVO = (MemberVO)session.getAttribute("member");
+		
+		memberVO.setMemberFilesVO(loginVO.getMemberFilesVO());
+		
+		memberVO = memberService.memberUpdate(memberVO, files);
+		
+		
+		System.out.println("Files:"+files.getOriginalFilename());
+		
+		String message = "Update Fail";
+		String path = "../";
+		if(memberVO !=null) {
+			message = "Update Success";
+			
+		
+		}
+		mv.setViewName("common/result");
+		mv.addObject("message", message);
+		mv.addObject("path", path);
+		
+		return mv;
 	}
 	
 	
