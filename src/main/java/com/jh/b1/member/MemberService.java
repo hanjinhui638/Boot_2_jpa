@@ -28,8 +28,8 @@ public class MemberService {
 	private FileSaver fileSaver;
 	
 	
-	public void memberDelete(String id)throws Exception{
-	 memberRepository.deleteById(id);
+	public void memberDelete(MemberVO memberVO)throws Exception{
+	 memberRepository.deleteById(memberVO.getId());
 		
 	}
 	

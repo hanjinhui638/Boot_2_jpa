@@ -25,10 +25,10 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
-	
-	public String memberDelete(String id, HttpSession session)throws Exception{
-		
-		memberService.memberDelete(id);
+	@GetMapping("memberDelete")
+	public String memberDelete(HttpSession session)throws Exception{
+		MemberVO memberVO = (MemberVO)session.getAttribute("member");
+		memberService.memberDelete(memberVO);
 		session.invalidate();
 		
 		return "redirect:../";
