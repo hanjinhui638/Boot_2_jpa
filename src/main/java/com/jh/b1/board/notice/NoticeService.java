@@ -1,6 +1,7 @@
 package com.jh.b1.board.notice;
 
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,8 @@ public class NoticeService {
 	@Autowired
 	private NoticeRepository noticeRepository;
 	
-	public void noticeList() throws Exception{
-		noticeRepository.findAllByNumDesc();
+	public List<NoticeVO> noticeList() throws Exception{
+		return noticeRepository.findAllByNumDesc();
 			
 	}
 	
