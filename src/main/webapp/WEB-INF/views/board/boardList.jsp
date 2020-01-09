@@ -10,8 +10,8 @@
 </head>
 <body>
 <c:import url="../template/nav.jsp"></c:import>
-<div class = "contents">
-	<table class = "table table-hover">
+<div class = "container">
+	<table class = "table table-condensed ">
 		<tr>
 			<td>NUM</td>
 			<td>TITLE</td>

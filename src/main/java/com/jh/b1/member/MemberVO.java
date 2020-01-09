@@ -33,7 +33,7 @@ public class MemberVO {
 	
 	//MemberVO To MemberFilesVO
 	//@OneToOne(mappedBy = "Join하는 Entity에 선언된 자기 자신의 Entity 변수명") -  fetch = FetchType.EAGER
-	@OneToOne(mappedBy = "memberVO", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "memberVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private MemberFilesVO memberFilesVO;
 	
 	
