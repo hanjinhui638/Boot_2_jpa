@@ -11,6 +11,11 @@
 <body>
 <c:import url="../template/nav.jsp"></c:import>
 <div class = "container">
+
+	<div>
+		<a href="./${board}Write" class = "btn btn-danger">글쓰기</a>
+	</div>
+
 	<table class = "table table-condensed ">
 		<tr>
 			<td>NUM</td>
@@ -18,15 +23,20 @@
 			<td>WRITER</td>
 			<td>DATE</td>
 			<td>HIT</td>
-		
+			<!-- <td>File</td> -->
 		</tr>
 		<c:forEach items="${list}" var = "vo">
 			<tr>
 				<td>${vo.num}</td>
-				<td>${vo.title}</td>
+				<td><a href="./${board}Select?num=${vo.num}">${vo.title}</a></td>
 				<td>${vo.writer}</td>
 				<td>${vo.regDate}</td>
-				<td>${vo.hit}</td>		
+				<td>${vo.hit}</td>	
+			<%-- 	<td>
+					<c:forEach items="${vo.noticeFilesVOs}" var = "f">
+					 	${f.fname}
+					</c:forEach>
+				</td>	 --%>
 			</tr>		
 		</c:forEach>
 	

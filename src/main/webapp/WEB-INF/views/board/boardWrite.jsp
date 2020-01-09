@@ -1,64 +1,82 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <c:import url="../template/boot.jsp"/>
-<!-- include summernote css/js -->
-<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js">
-</script>
 </head>
 <body>
 <c:import url="../template/nav.jsp"/>
-
+>
 <div class="container">
-	  <h2>Notice Write</h2>
-	  <form:form action="./noticeWrite" modelAttribute="noticeVO" method="post" enctype="multipart/form-data" id = "frm">
+	  <h2>${board} Write Form</h2>
+	  <form action="${board}Write" method="post" enctype="multipart/form-data">
 	  	
 	    <div class="form-group">
 	      <label for="title">Title:</label>
-	 <!--      <input type="text" class="form-control" id="title" placeholder="Enter title" name="title"> -->
-	      <form:input path="title" class="form-control" id="title" placeholder="Enter title"/>
-	      <form:errors path="title"/>
+	      <input type="text" class="form-control" id="title" placeholder="Enter title" name="title">
 	    </div>
 	    
 	    <div class="form-group">
 	      <label for="writer">Writer:</label>
-	      <form:input path="writer" class="form-control" id="writer" placeholder="Enter Writer"/>
-	      <form:errors path="writer"/>
+	      <input type="text" class="form-control" id="writer" placeholder="Enter Writer" name="writer">
 	    </div>
 	    
 	    <div class="form-group">
 	      <label for="contents">Contents:</label>
-	   <!--    <textarea  rows="20" cols="50" class="form-control" id="contents" placeholder="Enter Contents" name="contents"></textarea> -->
-	      <form:textarea path="contents" class="form-control" id="contents" placeholder="Enter Contents" />
-	      <form:errors path="contents"/>
+	      <textarea  rows="20" cols="50" class="form-control" id="contents" placeholder="Enter Contents" name="contents"></textarea>
 	    </div>
 	    
-	 <!--    <div class="form-group">
-	      <label for="File">File:</label>
-	      <input type="file" class="form-control" id="files" name="files">
-	    </div>  -->
-	    
-	    <div class = "row">
-	    <input type="button" class="btn btn-info col-sm-3" id = "add" value="Add file">
-	    <div id = "files" class = "col-sm-12"></div>
-	    
+	       <div id = "files">
+	    	<div class = "form-group" title = "parent" >
+	    	 	 <label for="file" class = "control-label col-sm-2" >File:</label>
+	     	 <div class = "col-sm-9">
+	      			<input type="file" class="form-control " id="file" name="files">
+	      	</div>
+	     	 <div class = "col-sm-1">
+	      		<input type="button" class="form-control btn btn-danger del" value="del">
+	     	 </div>
+	    	</div>
 	    </div>
+	    
+	   
+			<input type="button" class = "btn btn-success" value="Add File" id = "add">
 	    
 	    
 	     <button class="btn btn-info">Submit</button>
-	    </form:form>
+	    </form>
 	</div>
-	
-	<script type="text/javascript" src="../js/summernote.js"></script>
-	<script type="text/javascript" src="../js/fileCount.js"></script>
 
+<script type="text/javascript">
+
+		var files = $("#files").html();  //click event 밖에 선언 
+			$("#files").empty(); 	
+			var count =0; 					//안에 선언하면 초기화
+			var index =0;	//index선언
+		
+		$("#files").on("click",".del",function(){
+			//$(this).parent().parent().remove();
+			$(this).parents(".form-group").remove(); 
+			count--;
+		});
+			
+		
+		$("#add").click(function () {
+				if(count<5){
+					
+				//var files = '<div id = "f'+index+''"><input><input type="button" title="f"></div>';
+				$("#files").append(files);
+				count++;
+				//connt++
+				//index++ 자신과 상관 없는 속성 controll하기 
+				}else{
+					alert("최대 5개 가능");
+				}
+		});
+</script>		
 
 </body>
 </html>

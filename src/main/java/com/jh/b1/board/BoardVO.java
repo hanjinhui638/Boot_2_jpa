@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import lombok.Data;
 
 //setter, getter, equals, hashcode
@@ -21,6 +23,7 @@ public class BoardVO {
 	private String title;
 	private String writer;
 	private String contents;
+	@CreationTimestamp
 	private Date regDate;
 	private int hit;
 	
