@@ -8,12 +8,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jh.b1.util.FilePathGenerator;
 import com.jh.b1.util.FileSaver;
+import com.jh.b1.util.Pager;
 
 
 
@@ -32,10 +34,6 @@ public class NoticeService {
 	@Autowired
 	private FileSaver fileSaver;
 	
-	@Transactional
-	public Page<NoticeVO> findAll(Pageable pageable){
-		return noticeRepository.findAll(pageable);
-	}
 	
 	public void noticeWrite(NoticeVO noticeVO, List<MultipartFile> files)throws Exception{
 		
@@ -55,7 +53,6 @@ public class NoticeService {
 		//for 끝
 		
 		if(check) {
-			System.out.println("asdfsdgsdgdsgds");
 			noticeFilesVOs = new ArrayList<NoticeFilesVO>();
 			for(MultipartFile multipartFile:files) {
 				if(multipartFile.getSize()>0) {
@@ -88,11 +85,19 @@ public class NoticeService {
 	}
 	
 	
-	public List<NoticeVO> noticeList(Pageable pageable) throws Exception{
-		Page<NoticeVO> p = noticeRepository.findByNumGreaterThan(0, pageable);
+	public Pager noticeList(Pager pager) throws Exception{
+		//PageRequest 생성 
 		
-		return p.getContent();
+		pager.makePageRequest(Sort.by("num").descending());
+		
+		Page<NoticeVO> p = noticeRepository.findByNumGreaterThan(0, pager.getPageable());
+		
+		pager.setPageList(p);
+		
+		//페이징 처리 계산 
+		pager.makeNum();
 			
+		return pager;
 	}
 	
 

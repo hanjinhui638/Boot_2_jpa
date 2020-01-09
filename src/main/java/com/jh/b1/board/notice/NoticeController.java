@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jh.b1.util.Pager;
+
 
 
 @Controller
@@ -30,9 +32,7 @@ public class NoticeController {
 	@Resource(name= "noticeService")
 	private NoticeService noticeService;
 	
-	@Autowired
-	private NoticeRepository noticeRepository;
-	
+
 	
 	@ModelAttribute(name = "board")
 	public String getBoard() {
@@ -80,17 +80,18 @@ public class NoticeController {
 	
 	
 	@GetMapping("noticeList")
-	public ModelAndView noticeList(Pageable pageable)throws Exception{
+	public ModelAndView noticeList(Pager pager)throws Exception{
 		//model은 인터페이스이기 때문에 사용하려면 클래스(오버라이딩)를 만들어야되기 때문에 Spring에서 Model을 상속해서 만든 것을 받아서 사용 
 		//ModelAndView도 받아서 사용 가능 
 			
 		ModelAndView mv = new ModelAndView();
 		
-		Pageable pageable2 = PageRequest.of(0, 10, Sort.Direction.ASC, "num");
+		//Pageable pageable2 = PageRequest.of(0, 10, Sort.Direction.ASC, "num");
 		
 		
-		List<NoticeVO> ar = noticeService.noticeList(pageable2);
-		mv.addObject("list", ar);
+		//List<NoticeVO> ar = noticeService.noticeList(pageable2);
+		pager = noticeService.noticeList(pager);
+		mv.addObject("list", pager);
 		mv.setViewName("board/boardList");
 		
 		return mv;
