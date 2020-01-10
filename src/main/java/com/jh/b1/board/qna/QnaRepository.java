@@ -29,4 +29,5 @@ public interface QnaRepository extends JpaRepository<QnaVO, Integer> {
 	//q.writer 와 q.contents는 vo로 못 받음
 	@Query("select q.writer, q.contents from QnaVO q where num=?1")
 	List<Object[]> qnaSelete(int num)throws Exception;
+	
 }
