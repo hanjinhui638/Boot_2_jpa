@@ -20,6 +20,10 @@ public class Pager {
 	private Integer totalBlock;
 	private Page<? extends Object> pageList;
 	private Pageable pageable;
+	private String search;
+	private String kind;
+	
+	
 	
 	public Pager() {
 		this.curPage=0;

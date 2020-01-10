@@ -87,15 +87,22 @@ public class NoticeService {
 	
 	public Pager noticeList(Pager pager) throws Exception{
 		//PageRequest 생성 
+		//Sort.by("num").descending().and(Sort.by("").ascending();
 		
 		pager.makePageRequest(Sort.by("num").descending());
 		
-		Page<NoticeVO> p = noticeRepository.findByNumGreaterThan(0, pager.getPageable());
+		
+		//Page<NoticeVO> p = noticeRepository.findByNumGreaterThan(pager,0, pager.getPageable());
+		
+		Page<NoticeVO> p = noticeRepository.findByTitleContainingAndNumGreaterThan("1", 0, pager.getPageable());
 		
 		pager.setPageList(p);
 		
 		//페이징 처리 계산 
 		pager.makeNum();
+		
+		
+		
 			
 		return pager;
 	}

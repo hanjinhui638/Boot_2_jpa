@@ -25,7 +25,7 @@
 			<td>HIT</td>
 			<!-- <td>File</td> -->
 		</tr>
-		<c:forEach items="${list.pageList.contents}" var = "vo">
+		<c:forEach items="${list.pageList.content}" var = "vo">
 			<tr>
 				<td>${vo.num}</td>
 				<td><a href="./${board}Select?num=${vo.num}">${vo.title}</a></td>
@@ -61,7 +61,7 @@
 		</c:if>
 	</div>
 	
-	<div> <!-- 검색창 -->
+ 	<div> <!-- 검색창 -->
 	  		<form id="frm" action="./${board}List">
 	  			<input type="hidden" id="curPage" value="1" name="curPage">
 	  			<select name="kind">
@@ -76,11 +76,11 @@
 	  	</div>
 
 
-</div>
+</div> 
 
 
 
-	<script type="text/javascript">
+ <script type="text/javascript">
 	 	var kind = '${pager.kind}';
 		if(kind == ''){
 				kind = "kT";
@@ -91,7 +91,7 @@
 			$("#curPage").val($(this).attr("id"));
 			$("#frm").sumit();
 			
-			});
+			}); 
 		
 	</script>
 
